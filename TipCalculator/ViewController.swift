@@ -33,6 +33,30 @@ class ViewController: UIViewController {
         let defaults = UserDefaults.standard
         tipControl.selectedSegmentIndex =
             defaults.integer(forKey: "tipInt")
+
+        let tipPercentages = [0.18, 0.20, 0.25]
+        
+        let bill = Double(billField.text!) ?? 0
+        
+        var split = Int(splitField.text!)
+        if split != nil {
+            if split! <= 0 {
+                split = 1;
+                splitField.text = "1"
+            }
+        }
+        else {
+            split = 1;
+            splitField.text = "1"
+        }
+        
+        let tip = bill * tipPercentages[tipControl.selectedSegmentIndex]
+        let total = bill + tip
+        let subtotal = total/Double(split!)
+        
+        tipLabel.text = String(format: "$%.2f", tip)
+        totalLabel.text = String(format: "$%.2f", total)
+        subtotalField.text = String(format: "$%.2f", subtotal)
     }
 
     @IBAction func onTap(_ sender: Any) {
